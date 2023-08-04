@@ -1,33 +1,19 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SortedDigitsFromArray {
 
     public static String getSortedDigitsFromArray(String[] array) {
-        // Combine all elements into a single string
-        StringBuilder combinedString = new StringBuilder();
-        for (String element : array) {
-            combinedString.append(element);
-        }
+        Stream<Integer> digitStream = Arrays.stream(array)
+                .flatMap(s -> Arrays.stream(s.split(", ")))
+                .map(Integer::valueOf)
+                .sorted();
 
-        List<Integer> digits = new ArrayList<>();
-        for (char ch : combinedString.toString().toCharArray()) {
-            if (Character.isDigit(ch)) {
-                digits.add(Character.getNumericValue(ch));
-            }
-        }
-
-        // Sort the digits
-        digits.sort(Integer::compareTo);
-
-        var sortedStrings = new ArrayList<String>();
-        for (int digit : digits) {
-            sortedStrings.add(String.valueOf(digit));
-        }
-
-        return String.join(", ", sortedStrings);
+        return digitStream.map(String::valueOf)
+                .collect(Collectors.joining(", "));
     }
 
     public static void main(String[] args) {

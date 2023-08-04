@@ -16,7 +16,8 @@ public class LinearCongruentialGenerator {
         long seed = 42L;
         Stream<Long> generatedStream = generateStream(seed, a, c, m);
 
-        // Limit the stream to generate the first 10 elements
-        generatedStream.limit(10).forEach(System.out::println);
+        long sum = generatedStream.limit(10).mapToLong(Long::longValue).sum();
+
+        System.out.println("Sum of the first 10 elements: " + sum);
     }
 }

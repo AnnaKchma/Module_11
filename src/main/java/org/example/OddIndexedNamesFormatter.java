@@ -1,26 +1,18 @@
 package org.example;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-class OddIndexedNamesFormatter {
+public class OddIndexedNamesFormatter {
 
     public static String formatOddIndexedNames(List<String> names) {
-        StringBuilder formattedNames = new StringBuilder();
+        List<String> oddIndexedNames = IntStream.range(1, names.size())
+                .filter(i -> i % 2 == 1)
+                .mapToObj(i -> (i + 1) + ". " + names.get(i))
+                .collect(Collectors.toList());
 
-        for (int i = 0; i < names.size(); i++) {
-            // Check if the index is odd (1, 3, 5, ...)
-            if (i % 2 == 1) {
-                String name = names.get(i);
-                formattedNames.append((i + 1) + ". " + name + ", ");
-            }
-        }
-
-        // Remove the trailing comma and space from the last name
-        if (formattedNames.length() > 0) {
-            formattedNames.delete(formattedNames.length() - 2, formattedNames.length());
-        }
-
-        return formattedNames.toString();
+        return String.join(", ", oddIndexedNames);
     }
 
     public static void main(String[] args) {

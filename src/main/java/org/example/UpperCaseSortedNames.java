@@ -1,22 +1,15 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UpperCaseSortedNames {
 
     public static List<String> getUpperCaseSortedNames(List<String> names) {
-        // Convert names to uppercase
-        List<String> upperCaseNames = new ArrayList<>();
-        for (String name : names) {
-            upperCaseNames.add(name.toUpperCase());
-        }
-
-        // Sort names in descending order (Z to A)
-        upperCaseNames.sort(Collections.reverseOrder());
-
-        return upperCaseNames;
+        return names.stream()
+                .map(String::toUpperCase)
+                .sorted((name1, name2) -> name2.compareTo(name1)) // Sort in descending order
+                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
